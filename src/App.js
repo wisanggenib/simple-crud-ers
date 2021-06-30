@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import sendAsync from "./connector/render";
 
 const App = () => {
-  const [message, setMessage] = useState("SELECT * FROM repositories");
+  const [message, setMessage] = useState("SELECT * FROM PRODUK");
   const [response, setResponse] = useState();
 
   function send(sql) {

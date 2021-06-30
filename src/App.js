@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
 
-function App() {
+import sendAsync from "./connector/render";
+
+const App = () => {
+  const [message, setMessage] = useState("SELECT * FROM repositories");
+  const [response, setResponse] = useState();
+
+  function send(sql) {
+    sendAsync(sql).then((result) => setResponse(result));
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input
+        type="text"
+        value={message}
+        onChange={({ target: { value } }) => setMessage(value)}
+      />
+      <button type="button" onClick={() => send(message)}>
+        Send
+      </button>
+      <pre>
+        {(response && JSON.stringify(response, null, 2)) ||
+          "No query results yet!"}
+      </pre>
     </div>
   );
-}
+};
 
 export default App;

@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "main": "public/electron.js",
+  "build": {
+    "appId": "<com.gusLearn>"
+    },
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -16,11 +19,17 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "react-build": "react-scripts build",
+    "electron-build": "electron-builder",
+    "electron-pack": "electron-builder -c.extraMetadata.main=build/electron.js",
+    "build-curr": "electron-builder -c.extraMetadata.main=build/electron.js -mwl",
     "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
-    "rebuild-sqlite3": "electron-rebuild -f -w sqlite3"
+    "postinstall": "electron-builder install-app-deps",
+    "rebuild-sqlite3": "electron-rebuild -f -w sqlite3",
+    "release": "yarn react-build && electron-builder --publish=always",
+    "build": "yarn electron-build --linux"
   },
   "eslintConfig": {
     "extends": [
